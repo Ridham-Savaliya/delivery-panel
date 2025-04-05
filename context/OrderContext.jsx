@@ -1,9 +1,15 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
   const [acceptedOrders, setAcceptedOrders] = useState([]);
+  const [deliveryAgentId, setDeliveryAgentId] = useState(false);
+  const [orders,setOrders] = useState([]);
+
+  // const {orders,setOrders} = useContext(OrderContext);
+
+  const backend = 'https://quick-bites-backend.vercel.app';
 
   const addAcceptedOrder = (order) => {
     setAcceptedOrders((prev) => {
@@ -28,7 +34,7 @@ export const OrderProvider = ({ children }) => {
   };
 
   return (
-    <OrderContext.Provider value={{ acceptedOrders, addAcceptedOrder, updateAcceptedOrder }}>
+    <OrderContext.Provider value={{ acceptedOrders,orders,setOrders,addAcceptedOrder, updateAcceptedOrder, backend }}>
       {children}
     </OrderContext.Provider>
   );
